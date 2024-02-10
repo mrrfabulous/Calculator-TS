@@ -41,7 +41,16 @@ const handleClick = (button) => {
         typingDisplay();
     }
     else if (button.innerText === ".") {
-        if (!upperScreen.innerHTML.includes(".")) {
+        let screenContent = upperScreen.innerHTML;
+        let lastNum = screenContent.split(/[+\-*/]/).pop();
+        if (!lastNum.includes(".")) {
+            upperScreen.innerHTML += button.innerHTML;
+        }
+    }
+    else if (button.innerText === ".") {
+        let screenContent = upperScreen.innerHTML;
+        let lastNum = screenContent.split(/[+\-*/]/).pop();
+        if (!lastNum.includes(".")) {
             upperScreen.innerHTML += button.innerHTML;
         }
     }
@@ -50,9 +59,6 @@ const handleClick = (button) => {
             upperScreen.innerHTML += button.innerHTML;
         }
     }
-    // else if (button.innerText == "ans.") {
-    //     upperScreen.innerHTML += result
-    // }
     else if (button.innerText == "=") {
         evaluate();
     }
