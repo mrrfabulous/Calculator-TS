@@ -42,20 +42,29 @@ const handleClick = (button:HTMLButtonElement) => {
     else if (button.innerText == "/" ||button.innerText == "*" || button.innerText == "-" || button.innerText == "+") {
         upperScreen.innerHTML += " " + button.innerHTML + " "
         typingDisplay()
-    } 
-    else if (button.innerText === ".") {
-        if (!upperScreen.innerHTML.includes(".")) {
-        upperScreen.innerHTML += button.innerHTML;
-        }
     }
+    else if (button.innerText === ".") {
+    let screenContent = upperScreen.innerHTML;
+    let lastNum = screenContent.split(/[+\-*/]/).pop();
+    if (!lastNum.includes(".")) {
+        upperScreen.innerHTML += button.innerHTML;
+    }
+}
+    else if (button.innerText === ".") {
+        let screenContent = upperScreen.innerHTML;
+        let lastNum = screenContent.split(/[+\-*/]/).pop();
+        if (!lastNum.includes(".")) {
+            upperScreen.innerHTML += button.innerHTML;
+        }
+    }
+    
+
     else if (button.innerText === "%") {
         if (!upperScreen.innerHTML.includes("%")) {
         upperScreen.innerHTML += button.innerHTML;
         }
     }
-    // else if (button.innerText == "ans.") {
-    //     upperScreen.innerHTML += result
-    // }
+    
     else if (button.innerText == "=" ) {
         evaluate();
     } 
