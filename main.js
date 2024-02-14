@@ -4,6 +4,7 @@ const upperScreen = document.querySelector(".upper-screen");
 const lowerScreen = document.querySelector(".lower-screen");
 let answer = document.getElementById("answer");
 let result;
+// function for evaluation
 const evaluate = () => {
     try {
         result = eval(upperScreen.innerHTML);
@@ -14,12 +15,30 @@ const evaluate = () => {
         lowerScreen.innerHTML = "Error";
     }
 };
+//function for displayiong content at lower screen when typing
 const typingDisplay = () => {
     result = eval(upperScreen.innerHTML);
     lowerScreen.innerHTML = result;
 };
+//handle clicke function for all buttons
 const handleClick = (button) => {
-    if (!isNaN(parseFloat(button.innerText))) {
+    if (button.innerText === "0") {
+        if (upperScreen.innerHTML == "0" || upperScreen.innerHTML == "") {
+            upperScreen.innerHTML = button.innerText;
+        }
+        else {
+            upperScreen.innerHTML += button.innerText;
+        }
+    }
+    else if (button.innerText === "00") {
+        if (upperScreen.innerHTML == "" || upperScreen.innerHTML == "0") {
+            upperScreen.innerHTML = "0";
+        }
+        else {
+            upperScreen.innerHTML += button.innerText;
+        }
+    }
+    else if (!isNaN(parseFloat(button.innerText))) {
         upperScreen.innerHTML += button.innerText;
         typingDisplay();
     }
@@ -36,7 +55,10 @@ const handleClick = (button) => {
             lowerScreen.innerText = "";
         }
     }
-    else if (button.innerText == "/" || button.innerText == "*" || button.innerText == "-" || button.innerText == "+") {
+    else if (button.innerText == "/" ||
+        button.innerText == "*" ||
+        button.innerText == "-" ||
+        button.innerText == "+") {
         upperScreen.innerHTML += " " + button.innerHTML + " ";
         typingDisplay();
     }
@@ -47,22 +69,14 @@ const handleClick = (button) => {
             upperScreen.innerHTML += button.innerHTML;
         }
     }
-    else if (button.innerText === ".") {
-        let screenContent = upperScreen.innerHTML;
-        let lastNum = screenContent.split(/[+\-*/]/).pop();
-        if (!lastNum.includes(".")) {
-            upperScreen.innerHTML += button.innerHTML;
-        }
-    }
     else if (button.innerText === "%") {
-        if (!upperScreen.innerHTML.includes("%")) {
-            upperScreen.innerHTML += button.innerHTML;
-        }
+        upperScreen.innerHTML += button.innerText;
     }
     else if (button.innerText == "=") {
         evaluate();
     }
 };
-buttons.forEach(button => {
+//adding event listener for the buttons
+buttons.forEach((button) => {
     button.addEventListener("click", () => handleClick(button));
 });
